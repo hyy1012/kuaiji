@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>财务管理系统</title>
+    <base th:href="${#request.getContextPath()}+'/'">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -78,7 +79,7 @@
         <!-- 侧边菜单 -->
         <div class="layui-side layui-side-menu">
             <div class="layui-side-scroll">
-                <div class="layui-logo" lay-href="home/console.html">
+                <div class="layui-logo" lay-href="home/console">
                     <span>财务管理系统</span>
                 </div>
 
@@ -89,26 +90,38 @@
                             <cite>信息录入</cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd data-name="console" class="layui-this">
-                                <a lay-href="info/d_input.html">电汇信息录入</a>
+                            <dd data-name="info" class="layui-this">
+                                <a lay-href="info/d_input">付款信息录入</a>
                             </dd>
-                            <dd data-name="console">
-                                <a lay-href="info/c_input.html">承兑信息录入</a>
+                            <dd data-name="info">
+                                <a lay-href="info/c_input">承兑信息录入</a>
                             </dd>
                         </dl>
                     </li>
 
-                    <li data-name="excel" class="layui-nav-item layui-nav-itemed">
+                    <li data-name="excel" class="layui-nav-item">
                         <a href="javascript:;" lay-tips="Excel表单" lay-direction="2">
-                            <i class="layui-icon layui-icon-list"></i>
+                            <i class="layui-icon layui-icon-table"></i>
                             <cite>Excel表单</cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd data-name="console">
-                                <a lay-href="excel/cheques.html">承兑汇票登记表</a>
+                            <dd data-name="excel">
+                                <a lay-href="excel/cheques">承兑汇票登记表</a>
                             </dd>
-                            <dd data-name="console">
+                            <dd data-name="excel">
                                 <a lay-href="excel/contract">合同登记及付款表</a>
+                            </dd>
+                        </dl>
+                    </li>
+
+                    <li data-name="upkeep" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="信息维护" lay-direction="1">
+                            <i class="layui-icon layui-icon-list"></i>
+                            <cite>信息维护</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="upkeep">
+                                <a lay-href="upkeep/company">公司列表</a>
                             </dd>
                         </dl>
                     </li>
@@ -135,7 +148,7 @@
             </div>
             <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
                 <ul class="layui-tab-title" id="LAY_app_tabsheader">
-                    <li lay-id="home/console.html" lay-attr="home/console.html" class="layui-this"><i
+                    <li lay-id="home/console" lay-attr="home/console" class="layui-this"><i
                             class="layui-icon layui-icon-home"></i></li>
                 </ul>
             </div>
@@ -144,7 +157,7 @@
         <!-- 主体内容 -->
         <div class="layui-body" id="LAY_app_body">
             <div class="layadmin-tabsbody-item layui-show">
-                <iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>
+                <iframe src="home/console" frameborder="0" class="layadmin-iframe"></iframe>
             </div>
         </div>
 
@@ -153,10 +166,10 @@
     </div>
 </div>
 
-<script src="/layuiadmin/layui/layui.js"></script>
+<script src="layuiadmin/layui/layui.js"></script>
 <script>
     layui.config({
-        base: '/layuiadmin/' //静态资源所在路径
+        base: 'layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
     }).use('index');

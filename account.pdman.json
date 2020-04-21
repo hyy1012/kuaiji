@@ -18,7 +18,7 @@
             },
             {
               "name": "no",
-              "type": "Integer",
+              "type": "DefaultString",
               "remark": "",
               "chnname": "合同号"
             },
@@ -30,7 +30,7 @@
             },
             {
               "name": "c_name",
-              "type": "IdOrKey",
+              "type": "DefaultString",
               "remark": "",
               "chnname": "合同名称"
             },
@@ -242,6 +242,134 @@
             }
           ],
           "chnname": "公司"
+        },
+        {
+          "title": "com_pay_record",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "id",
+              "pk": true,
+              "notNull": true,
+              "autoIncrement": true
+            },
+            {
+              "name": "no",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "凭证号"
+            },
+            {
+              "name": "p_time",
+              "type": "Date",
+              "remark": "",
+              "chnname": "付款日期"
+            },
+            {
+              "name": "p_name",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "付款项目"
+            },
+            {
+              "name": "c_id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "受款单位"
+            },
+            {
+              "name": "p_money",
+              "type": "DECIMAL(16,6)",
+              "remark": "",
+              "chnname": "付款金额"
+            },
+            {
+              "name": "content",
+              "type": "string",
+              "remark": "",
+              "chnname": "付款内容"
+            },
+            {
+              "name": "r_no",
+              "type": "string",
+              "remark": "",
+              "chnname": "收据或发票号"
+            },
+            {
+              "name": "CREATED_BY",
+              "type": "IdOrKey",
+              "remark": "",
+              "chnname": "创建人"
+            },
+            {
+              "name": "CREATED_TIME",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "创建时间"
+            },
+            {
+              "name": "UPDATED_BY",
+              "type": "IdOrKey",
+              "remark": "",
+              "chnname": "更新人"
+            },
+            {
+              "name": "UPDATED_TIME",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "合同付款登记表"
         }
       ],
       "graphCanvas": {
@@ -250,38 +378,61 @@
             "shape": "table",
             "title": "contract",
             "moduleName": false,
-            "x": 190,
-            "y": 180,
+            "x": 120,
+            "y": 110,
             "id": "ad7f9ea4"
           },
           {
             "shape": "table",
             "title": "company",
             "moduleName": false,
-            "x": 600,
-            "y": 160,
+            "x": 500,
+            "y": 100,
             "id": "19c30fda"
+          },
+          {
+            "shape": "table",
+            "title": "com_pay_record",
+            "moduleName": false,
+            "x": 130,
+            "y": 440,
+            "id": "767ba6b6"
           }
         ],
         "edges": [
           {
             "shape": "erdRelation",
             "relation": "0,n:1",
-            "source": "ad7f9ea4",
+            "source": "767ba6b6",
             "target": "19c30fda",
-            "id": "cda5eba9",
+            "id": "77208557",
             "controlPoints": [
               {
-                "x": 346.6552734375,
-                "y": 162.43518518518516
+                "x": 280.6552734375,
+                "y": 422.43518518518516
               },
               {
-                "x": 453.0524766656732,
-                "y": 98.14648196352925
+                "x": 361.3447265625,
+                "y": 32.17857142857143
+              }
+            ],
+            "sourceAnchor": 9,
+            "targetAnchor": 0
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "ad7f9ea4",
+            "target": "19c30fda",
+            "id": "38903bd9",
+            "controlPoints": [
+              {
+                "x": 276.6552734375,
+                "y": 92.43518518518518
               },
               {
-                "x": 461.3447265625,
-                "y": 92.17857142857143
+                "x": 361.3447265625,
+                "y": 32.17857142857143
               }
             ],
             "sourceAnchor": 9,
@@ -290,6 +441,17 @@
         ]
       },
       "associations": [
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "com_pay_record",
+            "field": "c_id"
+          },
+          "to": {
+            "entity": "company",
+            "field": "id"
+          }
+        },
         {
           "relation": "0,n:1",
           "from": {

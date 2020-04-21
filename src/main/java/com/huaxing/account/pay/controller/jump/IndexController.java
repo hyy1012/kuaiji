@@ -1,11 +1,10 @@
-package com.huaxing.account.pay.controller;
+package com.huaxing.account.pay.controller.jump;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Class Name: com.huaxing.account.pay.controller.IndexController
+ * Class Name: com.huaxing.account.pay.controller.jump.IndexController
  * ==================================
  * Author Dell Lisufer
  * Date 2020/4/15 11:53
@@ -20,4 +19,8 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMapping("/home/console")
+    public String console(){
+        return "home/console";
+    }
 }

@@ -3,12 +3,22 @@
 <head>
     <meta charset="utf-8">
     <title>合同登记及付款表</title>
+    <base th:href="${#request.getContextPath()}+'/'">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="layuiadmin/layui/css/jquery-editable-select.css"/>
+    <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+    <style type="text/css">
+        .l-small{
+            width: 60px
+        }
+        .b-small{
+            margin-left: 90px;
+        }
+    </style>
 </head>
 <body>
 
@@ -16,39 +26,41 @@
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">ID</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+                <div class="layui-inline" style="width: 200px">
+                    <label class="layui-form-label l-small">公司ID</label>
+                    <div class="layui-input-block b-small">
+                        <input type="text" name="id" id="id" placeholder="请输入" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">用户名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+                <div class="layui-inline" style="width: 400px">
+                    <label class="layui-form-label l-small" style="">公司名称</label>
+                    <div class="layui-input-block b-small">
+                        <!--<input type="text" name="name" id="name" placeholder="请输入" autocomplete="off" class="layui-input">-->
+                        <select name="name" id="editable-select" class="layui-input" style="background-color: white"></select>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">性别</label>
-                    <div class="layui-input-block">
+                <!--<div class="layui-inline">
+                    <label class="layui-form-label l-small">性别</label>
+                    <div class="layui-input-block b-small">
                         <select name="sex">
                             <option value="0">不限</option>
                             <option value="1">男</option>
                             <option value="2">女</option>
                         </select>
                     </div>
-                </div>
+                </div>-->
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-user-front-search">
+                    <button class="layui-btn layuiadmin-btn-useradmin" id="search" lay-filter="LAY-user-front-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
+                    <button class="layui-btn" id="input_btn">信息录入</button>
                 </div>
             </div>
         </div>
 
         <div class="layui-card-body">
             <div style="padding-bottom: 10px; text-align:center;">
-                <h2>合同登记表</h2>
+                <h2>宁波华星轮胎有限公司合同登记表</h2>
             </div>
             <table id="dengji" lay-filter="dengji"></table>
             <script type="text/html" id="barDemo">
@@ -56,40 +68,193 @@
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
             </script>
 
+            <div style="padding: 10px 0; text-align:center;">
+                <h2>合同付款登记表</h2>
+            </div>
+            <table id="p_dengji" lay-filter="p_dengji"></table>
+            <script type="text/html" id="p_barDemo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
         </div>
     </div>
 </div>
 
-<script src="/layuiadmin/layui/layui.js"></script>
+<script type="text/template" id="d_input">
+    <form class="layui-form layui-form-pane layui-container" id="com_pay_record" style="margin: 10px auto; width: 800px;">
+        <div class="layui-form-item layui-row">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">凭证号</label>
+                <div class="layui-input-block">
+                    <input name="no" id="no" class="layui-input" type="text" placeholder="请输入凭证号">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md8">
+                <label class="layui-form-label">收款单位</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" name="name" id="name" type="text" autocomplete="off">
+<!--                    <select name="name" id="editable-select-i" class="layui-input" style="background-color: white"></select>-->
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-row">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">付款项目</label>
+                <div class="layui-input-block">
+                    <input name="pName" id="pName" class="layui-input" type="text" placeholder="请输入付款项目">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">付款金额</label>
+                <div class="layui-input-block">
+                    <input name="pMoney" id="pMoney" class="layui-input" type="text" placeholder="￥" lay-verify="validateMoney">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">付款方式</label>
+                <div class="layui-input-block">
+                    <input name="rNo" id="rNo" class="layui-input" type="text" placeholder="请输入付款方式">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-row">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">付款时间</label>
+                <div class="layui-input-block">
+                    <input name="pTime" class="layui-input" id="pTime" type="text" placeholder="yyyy-MM-dd"
+                           autocomplete="off" lay-verify="date">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md8">
+                <label class="layui-form-label">付款内容</label>
+                <div class="layui-input-block">
+                    <input name="content" id="content" class="layui-input" type="text" autocomplete="off" placeholder="请输入付款内容">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button id="compay" class="layui-btn" type="submit" lay-filter="compay" lay-submit="">生成付款登记表</button>
+                <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+            </div>
+        </div>
+    </form>
+</script>
+<script src="layuiadmin/layui/layui.js"></script>
+<script src="layuiadmin/lib/jquery-3.5.0.js"></script>
+<script src="layuiadmin/lib/jquery-editable-select.js"></script>
 <script>
     layui.config({
-        base: '/layuiadmin/' //静态资源所在路径
+        base: 'layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'useradmin', 'table'], function () {
-        var $ = layui.$
-            , form = layui.form
-            , table = layui.table;
+    }).use(['index', 'useradmin', 'table', 'element', 'laydate'], function () {
+        var $ = layui.$, form = layui.form, table = layui.table, laydate = layui.laydate;
+
+        $("#input_btn").click(function () {
+            layer.open({
+                type: 1
+                , title: '信息录入'
+                , content: $("#d_input").html()
+                , area: ['1000px', '300px']
+                , zIndex: 900
+                , offset: '10px'
+            });
+            laydate.render({
+                elem: '#pTime'
+            });
+            $('#name').val($('#editable-select').val())
+        })
 
         table.render({
-            elem: '#dengji'
-            ,url:'/test/table/demo1.json'
-            ,title: '用户数据表'
+            id: 'dengji'
+            ,elem: '#dengji'
+            ,url: 'contract/list'
             ,totalRow: true
             ,cols: [
                 [{type: 'checkbox', fixed: 'left'}
                 ,{field:'no', title:'合同号', width:80, fixed: 'left', unresize: true, totalRowText: '合计'}
-                ,{field:'q_time', title:'签订时间', width:120, edit: 'text'}
-                ,{field:'c_name', title:'合同名称', width:150, edit: 'text'}
-                ,{field:'cq_name', title:'合同签订方', width:220}
-                ,{field:'c_money', title:'合同金额', width:100, edit: 'text', totalRow: true}
-                ,{field:'cl_time', title:'付款、合同期限', width:150}
-                ,{field:'note', title:'备注'}
+                ,{field:'qTime', title:'签订时间', width:120}
+                ,{field:'cname', title:'合同名称', width:150}
+                ,{field:'name', title:'合同签订方', width:220}
+                ,{field:'cmoney', title:'合同金额', width:120, totalRow: true}
+                ,{field:'clTime', title:'付款、合同期限', edit: 'text', width:150}
+                ,{field:'note', title:'备注', edit: 'text',}
                 ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:150}]
             ]
             ,page: true
+            ,parseData: function(res){
+            }
         });
+
+        $('#search').click(function () {
+            var cId = $("#id").val()
+            var name = $("#editable-select").val()
+            if (cId != "" && name != ""){ layer.alert("输入id后不需要输入公司名称") }
+            table.reload('dengji', {
+                url: 'contract/list',
+                where: { cId, name }
+            })
+            table.reload('p_dengji', {
+                url: 'compay/p_list',
+                where: { cId, name }
+            })
+        })
+
+        table.render({
+            id: 'p_dengji'
+            ,elem: '#p_dengji'
+            ,url: 'compay/p_list'
+            ,totalRow: true
+            ,cols: [
+                [{type: 'checkbox', fixed:'left'}
+                    ,{field:'no', title:'凭证号', width:80, fixed: 'left', unresize: true, totalRowText: '合计'}
+                    ,{field:'pTime', title:'付款日期', width:120}
+                    ,{field:'pname', title:'付款项目', width:150}
+                    ,{field:'name', title:'受款单位', width:220}
+                    ,{field:'pmoney', title:'付款金额', width:120, totalRow: true}
+                    ,{field:'content', title:'付款内容', edit: 'text', width:150}
+                    ,{field:'rno', title:'收据或发票号', edit: 'text',}
+                    ,{fixed:'right', title:'操作', toolbar: '#p_barDemo', width:150}]
+            ]
+            ,page: true
+        });
+
+        $("#editable-select").on('input', function () {
+            var name = $("#editable-select").val();
+            if(name.match(/^[\u4e00-\u9fa5]+$/)){
+                $.ajax({
+                    "url": "company/tensl",
+                    "data": "name="+name,
+                    "type": "GET",
+                    "dataType": "json",
+                    "success": function (name) {
+                        $(".es-list").children().remove();
+                        $(".es-list").css("display","block");
+                        var num = 1;
+                        for (var i in name) {
+                            if (num == 1){
+                                var option = $('<li class="es-visible selected">').html(name[i]);
+                                num = 2;
+                            }else {
+                                var option = $('<li class="es-visible">').html(name[i]);
+                            }
+                            $(".es-list").append(option);
+                        }
+                    },
+                    "error": function () { }
+                });
+            }
+        })
+
     });
+</script>
+<script>
+    $('#editable-select').editableSelect({
+        effects: 'slide',   //下拉列表出来的方式
+        effects: 200  //时间
+    });
+
 </script>
 </body>
 </html>

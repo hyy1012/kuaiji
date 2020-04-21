@@ -3,7 +3,7 @@ server:
   compression:
     enabled: true
   servlet:
-    context-path: /
+    context-path: /pay
 spring:
   application:
     name: test-thymeleaf
@@ -14,6 +14,8 @@ spring:
     druid:
       url: jdbc:mysql://localhost:3306/account?useSSL=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Shanghai
       username: root
+#      url: jdbc:mysql://47.100.241.233:3306/account?useSSL=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+#      username: admin
       password: 123
       initial-size: 1
       min-idle: 1

@@ -1,24 +1,24 @@
-package com.huaxing.account.pay.controller;
+package com.huaxing.account.pay.controller.jump;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Class Name: com.huaxing.account.pay.controller.ExcelController
+ * Class Name: com.huaxing.account.pay.controller.jump.UpkeepController
  * ==================================
  * Author Dell Lisufer
- * Date 2020/4/16 19:44
- * Description: ExcelController
+ * Date 2020/4/16 23:36
+ * Description: UpkeepController
  * ==================================
  */
 @Controller
-@RequestMapping("excel")
-public class ExcelController {
+@RequestMapping("upkeep")
+public class UpkeepController {
 
-    @GetMapping("contract")
+    @GetMapping("company")
     public String contract(){
-        return "excel/contract";
+        return "upkeep/company";
     }
 
 }

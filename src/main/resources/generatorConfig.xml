@@ -29,7 +29,9 @@
         </jdbcConnection>
 
         <!-- 配置实体类存放路径 -->
-        <javaModelGenerator targetPackage="com.huaxing.account.pay.entity" targetProject="src/main/java"/>
+        <javaModelGenerator targetPackage="com.huaxing.account.pay.entity" targetProject="src/main/java">
+            <property name="rootClass" value="org.example.base.BaseEntity"/>
+        </javaModelGenerator>
 
         <!-- 配置 XML 存放路径 -->
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
@@ -41,7 +43,7 @@
                 type="XMLMAPPER"/>
 
         <!-- 配置需要指定生成的数据库和表，% 代表所有表 -->
-        <table tableName="contract">
+        <table tableName="com_pay_record">
             <!-- mysql 配置 -->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

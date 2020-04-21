@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.huaxing.account.pay.mapper.ContractMapper">
-  <resultMap id="BaseResultMap" type="com.huaxing.account.pay.entity.Contract">
+<mapper namespace="com.huaxing.account.pay.mapper.CompanyMapper">
+  <resultMap id="BaseResultMap" type="com.huaxing.account.pay.entity.Company">
     <!--
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="no" jdbcType="VARCHAR" property="no" />
-    <result column="q_time" jdbcType="DATE" property="qTime" />
+    <result column="e_name" jdbcType="VARCHAR" property="eName" />
     <result column="c_name" jdbcType="VARCHAR" property="cName" />
-    <result column="c_id" jdbcType="INTEGER" property="cId" />
-    <result column="c_money" jdbcType="DECIMAL" property="cMoney" />
-    <result column="cl_time" jdbcType="VARCHAR" property="clTime" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="note" jdbcType="VARCHAR" property="note" />
     <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
     <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
