@@ -370,6 +370,238 @@
             }
           ],
           "chnname": "合同付款登记表"
+        },
+        {
+          "title": "acceptance_bill",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "id",
+              "pk": true,
+              "notNull": true,
+              "autoIncrement": true
+            },
+            {
+              "name": "no",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "编号"
+            },
+            {
+              "name": "rz_time",
+              "type": "Date",
+              "remark": "",
+              "chnname": "入账日期"
+            },
+            {
+              "name": "number",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "号码"
+            },
+            {
+              "name": "money",
+              "type": "DECIMAL(16,6)",
+              "remark": "",
+              "chnname": "金额"
+            },
+            {
+              "name": "tiexi",
+              "type": "Integer",
+              "remark": "1.化纤已贴息\n2.未贴息\n3.自开",
+              "chnname": "是否贴息"
+            },
+            {
+              "name": "in_name",
+              "type": "string",
+              "remark": "",
+              "chnname": "付款单位"
+            },
+            {
+              "name": "dq_time",
+              "type": "Date",
+              "remark": "",
+              "chnname": "到期日期"
+            },
+            {
+              "name": "out_name",
+              "type": "string",
+              "remark": "",
+              "chnname": "付出单位"
+            },
+            {
+              "name": "fc_time",
+              "type": "Date",
+              "remark": "",
+              "chnname": "付出日期"
+            },
+            {
+              "name": "cd_type",
+              "type": "Integer",
+              "remark": "1.电子承兑",
+              "chnname": "承兑类型"
+            },
+            {
+              "name": "cd_bank",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "承兑银行"
+            },
+            {
+              "name": "note",
+              "type": "string",
+              "remark": "",
+              "chnname": "备注"
+            },
+            {
+              "name": "sz_bank",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "所在银行"
+            },
+            {
+              "name": "CREATED_BY",
+              "type": "IdOrKey",
+              "remark": "",
+              "chnname": "创建人"
+            },
+            {
+              "name": "CREATED_TIME",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "创建时间"
+            },
+            {
+              "name": "UPDATED_BY",
+              "type": "IdOrKey",
+              "remark": "",
+              "chnname": "更新人"
+            },
+            {
+              "name": "UPDATED_TIME",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "承兑汇票登记表"
+        },
+        {
+          "title": "year",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "id",
+              "pk": true,
+              "notNull": true,
+              "autoIncrement": false
+            },
+            {
+              "name": "year",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "year"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "年份"
         }
       ],
       "graphCanvas": {
@@ -397,6 +629,14 @@
             "x": 130,
             "y": 440,
             "id": "767ba6b6"
+          },
+          {
+            "shape": "table",
+            "title": "year",
+            "moduleName": false,
+            "x": 470,
+            "y": 290,
+            "id": "6a7b24f1"
           }
         ],
         "edges": [

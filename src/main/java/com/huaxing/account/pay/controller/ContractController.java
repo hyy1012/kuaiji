@@ -37,4 +37,27 @@ public class ContractController {
         return JsonUtils.page(0, info.getTotal(), "", list);
     }
 
+    @PostMapping("/insert")
+    public JSONObject insert(ContractDto contractDto){
+        return contractService.insert(contractDto);
+    }
+
+    @PostMapping("/del")
+    public JSONObject delete(Integer id){
+        Integer i = contractService.delete(id);
+        if (i == 0)
+            return JsonUtils.common(500, "删除失败");
+        else
+            return JsonUtils.common(200, "删除成功");
+    }
+
+    @PostMapping("/upd")
+    public JSONObject update(ContractDto contractDto){
+        Integer i = contractService.update(contractDto);
+        if (i == 0)
+            return JsonUtils.common(500, "修改失败");
+        else
+            return JsonUtils.common(200, "修改成功");
+    }
+
 }

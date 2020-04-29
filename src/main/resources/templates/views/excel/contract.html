@@ -11,21 +11,14 @@
     <link rel="stylesheet" href="layuiadmin/layui/css/jquery-editable-select.css"/>
     <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
-    <style type="text/css">
-        .l-small{
-            width: 60px
-        }
-        .b-small{
-            margin-left: 90px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/sousuo.css" media="all">
 </head>
 <body>
 
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-            <div class="layui-form-item">
+            <div class="layui-form-item line-height">
                 <div class="layui-inline" style="width: 200px">
                     <label class="layui-form-label l-small">公司ID</label>
                     <div class="layui-input-block b-small">
@@ -50,10 +43,11 @@
                     </div>
                 </div>-->
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-useradmin" id="search" lay-filter="LAY-user-front-search">
+                    <button class="layui-btn layui-btn-primary layuiadmin-btn-useradmin" id="search" lay-filter="LAY-user-front-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
-                    <button class="layui-btn" id="input_btn">信息录入</button>
+                    <button class="layui-btn" id="c_input_btn">合同登记录入</button>
+                    <button class="layui-btn layui-btn-warm" id="p_input_btn">付款登记录入</button>
                 </div>
             </div>
         </div>
@@ -80,13 +74,79 @@
     </div>
 </div>
 
-<script type="text/template" id="d_input">
+<!-- 合同登记录入 -->
+<script type="text/html" id="c_input">
+    <form class="layui-form layui-form-pane layui-container" id="contract" lay-filter="test1" style="margin: 10px auto; width: 800px;">
+        <div class="layui-form-item layui-row">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">合同号</label>
+                <div class="layui-input-block">
+                    <input name="id" id="c_id" hidden>
+                    <input name="no" id="c_no" class="layui-input" type="text">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md8">
+                <label class="layui-form-label">合同签订方</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" name="name" id="name" type="text" autocomplete="off">
+                    <!--                    <select name="name" id="editable-select-i" class="layui-input" style="background-color: white"></select>-->
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-row">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">合同金额</label>
+                <div class="layui-input-block">
+                    <input name="cMoney" id="cMoney" class="layui-input" type="text" placeholder="￥" lay-verify="validateMoney">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md8">
+                <label class="layui-form-label">合同名称</label>
+                <div class="layui-input-block">
+                    <input name="cName" id="cName" class="layui-input" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-row">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">签订时间</label>
+                <div class="layui-input-block">
+                    <input name="qTime" class="layui-input" id="qTime" type="text" autocomplete="off" lay-verify="date">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">付款、合同期限</label>
+                <div class="layui-input-block">
+                    <input name="clTime" id="clTime" class="layui-input" type="text">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input name="note" id="note" class="layui-input" type="text" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                {{#  if(d.id == null){ }}
+                <button id="contract_btn" class="layui-btn layui-btn-normal" type="button" lay-filter="compay" lay-submit="">提交</button>
+                {{#  }else{ }}
+                <button id="contract_btn_update" class="layui-btn layui-btn-normal" type="button" lay-filter="compay" lay-submit="">提交</button>
+                {{#  } }}
+            </div>
+        </div>
+    </form>
+</script>
+<!-- 付款登记录入 -->
+<script type="text/template" id="p_input">
     <form class="layui-form layui-form-pane layui-container" id="com_pay_record" style="margin: 10px auto; width: 800px;">
         <div class="layui-form-item layui-row">
             <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
                 <label class="layui-form-label">凭证号</label>
                 <div class="layui-input-block">
-                    <input name="no" id="no" class="layui-input" type="text" placeholder="请输入凭证号">
+                    <input name="id" id="p_id" hidden>
+                    <input name="no" id="p_no" class="layui-input" type="text" placeholder="请输入凭证号">
                 </div>
             </div>
             <div class="layui-col-xs6 layui-col-sm6 layui-col-md8">
@@ -99,21 +159,15 @@
         </div>
         <div class="layui-form-item layui-row">
             <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
-                <label class="layui-form-label">付款项目</label>
-                <div class="layui-input-block">
-                    <input name="pName" id="pName" class="layui-input" type="text" placeholder="请输入付款项目">
-                </div>
-            </div>
-            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
                 <label class="layui-form-label">付款金额</label>
                 <div class="layui-input-block">
                     <input name="pMoney" id="pMoney" class="layui-input" type="text" placeholder="￥" lay-verify="validateMoney">
                 </div>
             </div>
-            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
-                <label class="layui-form-label">付款方式</label>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md8">
+                <label class="layui-form-label">付款项目</label>
                 <div class="layui-input-block">
-                    <input name="rNo" id="rNo" class="layui-input" type="text" placeholder="请输入付款方式">
+                    <input name="pName" id="pName" class="layui-input" type="text" placeholder="请输入付款项目">
                 </div>
             </div>
         </div>
@@ -125,17 +179,26 @@
                            autocomplete="off" lay-verify="date">
                 </div>
             </div>
-            <div class="layui-col-xs6 layui-col-sm6 layui-col-md8">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
                 <label class="layui-form-label">付款内容</label>
                 <div class="layui-input-block">
                     <input name="content" id="content" class="layui-input" type="text" autocomplete="off" placeholder="请输入付款内容">
                 </div>
             </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <label class="layui-form-label">付款方式</label>
+                <div class="layui-input-block">
+                    <input name="rNo" id="rNo" class="layui-input" type="text" placeholder="请输入付款方式">
+                </div>
+            </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button id="compay" class="layui-btn" type="submit" lay-filter="compay" lay-submit="">生成付款登记表</button>
-                <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                {{#  if(d.id == null){ }}
+                <button id="compay_btn" class="layui-btn layui-btn-normal" type="button" lay-filter="compay" lay-submit="">提交</button>
+                {{#  }else{ }}
+                <button id="compay_btn_update" class="layui-btn layui-btn-normal" type="button" lay-filter="compay" lay-submit="">提交</button>
+                {{#  } }}
             </div>
         </div>
     </form>
@@ -148,22 +211,94 @@
         base: 'layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'useradmin', 'table', 'element', 'laydate'], function () {
-        var $ = layui.$, form = layui.form, table = layui.table, laydate = layui.laydate;
+    }).use(['index', 'useradmin', 'table', 'element', 'laydate', 'laytpl'], function () {
+        var $ = layui.$, form = layui.form, table = layui.table, laydate = layui.laydate, laytpl = layui.laytpl;;
 
-        $("#input_btn").click(function () {
+        $("#c_input_btn").click(function () {
+            var data = {"test":"test"}
             layer.open({
                 type: 1
                 , title: '信息录入'
-                , content: $("#d_input").html()
-                , area: ['1000px', '300px']
+                , content: laytpl($("#c_input").html()).render(data)
+                , area: ['800px', '270px']
+                , zIndex: 900
+                , offset: '270px'
+            });
+            laydate.render({
+                elem: '#qTime'
+            });
+            $('#search').click()
+            $('#name').val($('#editable-select').val())
+            $("#contract_btn").click(function () {
+                var fdata = $("#contract").serialize();
+                $.ajax({
+                    url: 'contract/insert',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: fdata, //ajax方法发送formData对象
+                    success: function (data) {
+                        if (data.code == 200){
+                            layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                , btn: '关闭', btnAlign: 'c', yes: function(){
+                                    layer.closeAll();
+                                    $('#search').click()
+                                }
+                            });
+                        }else {
+                            layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                , btn: '关闭', btnAlign: 'c', yes: function(){
+                                    layer.closeAll();
+                                }
+                            });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            })
+        })
+
+        $("#p_input_btn").click(function () {
+            layer.open({
+                type: 1
+                , title: '信息录入'
+                , content: $("#p_input").html()
+                , area: ['800px', '270px']
                 , zIndex: 900
                 , offset: '10px'
             });
             laydate.render({
                 elem: '#pTime'
             });
+            $('#search').click()
             $('#name').val($('#editable-select').val())
+            $("#compay_btn").click(function () {
+                var fdata = $("#com_pay_record").serialize();
+                $.ajax({
+                    url: 'compay/insert',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: fdata, //ajax方法发送formData对象
+                    success: function (data) {
+                        if (data.code == 200){
+                            layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                , btn: '关闭', btnAlign: 'c', yes: function(){
+                                    layer.closeAll();
+                                    $('#search').click()
+                                }
+                            });
+                        }else {
+                            layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                , btn: '关闭', btnAlign: 'c', yes: function(){
+                                    layer.closeAll();
+                                }
+                            });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            })
         })
 
         table.render({
@@ -172,14 +307,14 @@
             ,url: 'contract/list'
             ,totalRow: true
             ,cols: [
-                [{type: 'checkbox', fixed: 'left'}
-                ,{field:'no', title:'合同号', width:80, fixed: 'left', unresize: true, totalRowText: '合计'}
+                [{field:'no', title:'合同号', width:80, fixed: 'left', unresize: true, totalRowText: '合计'}
+                ,{field:"id", hide: true}
                 ,{field:'qTime', title:'签订时间', width:120}
                 ,{field:'cname', title:'合同名称', width:150}
                 ,{field:'name', title:'合同签订方', width:220}
                 ,{field:'cmoney', title:'合同金额', width:120, totalRow: true}
                 ,{field:'clTime', title:'付款、合同期限', edit: 'text', width:150}
-                ,{field:'note', title:'备注', edit: 'text',}
+                ,{field:'note', title:'备注', edit: 'text'}
                 ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:150}]
             ]
             ,page: true
@@ -207,15 +342,15 @@
             ,url: 'compay/p_list'
             ,totalRow: true
             ,cols: [
-                [{type: 'checkbox', fixed:'left'}
-                    ,{field:'no', title:'凭证号', width:80, fixed: 'left', unresize: true, totalRowText: '合计'}
-                    ,{field:'pTime', title:'付款日期', width:120}
-                    ,{field:'pname', title:'付款项目', width:150}
-                    ,{field:'name', title:'受款单位', width:220}
-                    ,{field:'pmoney', title:'付款金额', width:120, totalRow: true}
-                    ,{field:'content', title:'付款内容', edit: 'text', width:150}
-                    ,{field:'rno', title:'收据或发票号', edit: 'text',}
-                    ,{fixed:'right', title:'操作', toolbar: '#p_barDemo', width:150}]
+                [{field:'no', title:'凭证号', width:80, fixed: 'left', unresize: true, totalRowText: '合计'}
+                ,{field:"id", hide: true}
+                ,{field:'pTime', title:'付款日期', width:120}
+                ,{field:'pname', title:'付款项目', width:150}
+                ,{field:'name', title:'受款单位', width:220}
+                ,{field:'pmoney', title:'付款金额', width:120, totalRow: true}
+                ,{field:'content', title:'付款内容', edit: 'text', width:150}
+                ,{field:'rno', title:'收据或发票号', edit: 'text'}
+                ,{fixed:'right', title:'操作', toolbar: '#p_barDemo', width:150}]
             ]
             ,page: true
         });
@@ -246,6 +381,159 @@
                 });
             }
         })
+
+        //监听行工具事件
+        table.on('tool(dengji)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除这行么'+data.id, function(index){
+                    $.ajax({
+                        "url": "contract/del",
+                        "data": "id=" + data.id,
+                        "type": "POST",
+                        "dataType": "json",
+                        "success": function (data) {
+                            if (data.code == 200){
+                                layer.alert("删除成功")
+                                obj.del();
+                                layer.close(index);
+                            }else{
+                                layer.alert("删除失败")
+                                layer.close(index);
+                            }
+                        }
+                    })
+                });
+            } else if(obj.event === 'edit'){
+                layer.open({
+                    type: 1
+                    , title: '信息录入'
+                    , content: laytpl($("#c_input").html()).render(data)
+                    , area: ['800px', '270px']
+                    , zIndex: 900
+                    , offset: '270px'
+                });
+                laydate.render({
+                    elem: '#qTime'
+                });
+                $('#c_id').val(data.id)
+                $("#c_no").val(data.no)
+                $('#name').val(data.name)
+                $('#cName').val(data.cname)
+                $('#qTime').val(data.qTime)
+                $('#cMoney').val(data.cmoney)
+                $('#clTime').val(data.clTime)
+                $('#note').val(data.note)
+                $("#contract_btn_update").click(function () {
+                    var fdata = $("#contract").serialize();
+                    $.ajax({
+                        url: 'contract/upd',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: fdata, // ajax方法发送formData对象
+                        success: function (data) {
+                            if (data.code == 200){
+                                layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                    , btn: '关闭', btnAlign: 'c', yes: function(){
+                                        layer.closeAll();
+                                        $('#search').click()
+                                    }
+                                });
+                            }else {
+                                layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                    , btn: '关闭', btnAlign: 'c', yes: function(){
+                                        layer.closeAll();
+                                    }
+                                });
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                })
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(p_dengji)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('真的删除这行么'+data.id, function(index){
+                    $.ajax({
+                        "url": "compay/del",
+                        "data": "id=" + data.id,
+                        "type": "POST",
+                        "dataType": "json",
+                        "success": function (data) {
+                            if (data.code == 200){
+                                layer.alert("删除成功")
+                                obj.del();
+                                layer.close(index);
+                            }else{
+                                layer.alert("删除失败")
+                                layer.close(index);
+                            }
+                        }
+                    })
+                });
+            } else if(obj.event === 'edit'){
+                layer.open({
+                    type: 1
+                    , title: '信息录入'
+                    , content: laytpl($("#p_input").html()).render(data)
+                    , area: ['800px', '270px']
+                    , zIndex: 900
+                    , offset: '10px'
+                });
+                laydate.render({
+                    elem: '#pTime'
+                });
+                $('#p_id').val(data.id)
+                $("#p_no").val(data.no)
+                $('#name').val(data.name)
+                $('#pName').val(data.pname)
+                $('#pTime').val(data.pTime)
+                $('#pMoney').val(data.pmoney)
+                $('#content').val(data.content)
+                $('#rNo').val(data.rno)
+                $("#compay_btn_update").click(function () {
+                    var fdata = $("#com_pay_record").serialize();
+                    $.ajax({
+                        url: 'compay/upd',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: fdata, // ajax方法发送formData对象
+                        success: function (data) {
+                            if (data.code == 200){
+                                layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                    , btn: '关闭', btnAlign: 'c', yes: function(){
+                                        layer.closeAll();
+                                        $('#search').click()
+                                    }
+                                });
+                            }else {
+                                layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                    , btn: '关闭', btnAlign: 'c', yes: function(){
+                                        layer.closeAll();
+                                    }
+                                });
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                })
+            }
+        });
+
+        //自定义表单验证（金额）
+        form.verify({
+            validateMoney: [
+                /(^$)|(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/ //正则表达式
+                ,'请输入正确的金额' //提示信息
+            ]
+        });
 
     });
 </script>

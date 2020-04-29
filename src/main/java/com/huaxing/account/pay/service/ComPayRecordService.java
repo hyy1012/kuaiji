@@ -9,6 +9,7 @@ import com.huaxing.account.pay.entity.ComPayRecord;
 import com.huaxing.account.pay.entity.Company;
 import com.huaxing.account.pay.entity.Contract;
 import com.huaxing.account.pay.entity.dto.ComPayRecordDto;
+import com.huaxing.account.pay.entity.dto.ContractDto;
 import com.huaxing.account.pay.mapper.ComPayRecordMapper;
 import com.huaxing.account.pay.mapper.CompanyMapper;
 import com.huaxing.account.pay.mapper.dto.ComPayRecordMapperDto;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,6 +85,8 @@ public class ComPayRecordService {
         ComPayRecord comPayRecord = mapper.comPayRecordDtoAndCompanyToComPayRecord(comPayRecordDto, company);
         int insert = 0;
         try {
+            if (comPayRecord.getPTime() == null)
+                comPayRecord.setPTime(new Date());
             insert = comPayRecordMapper.insert(comPayRecord);
         } catch (Exception e) {
             return JsonUtils.common(ResponseStatus.notOk, e.getMessage());
@@ -93,4 +97,13 @@ public class ComPayRecordService {
         return JsonUtils.common(ResponseStatus.ok, "插入成功！");
     }
 
+    public Integer delete(Integer id){
+        return comPayRecordMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer update(ComPayRecordDto comPayRecordDto){
+        Company company = companyMapper.selectByName(comPayRecordDto.getName());
+        ComPayRecord comPayRecord = mapper.comPayRecordDtoAndCompanyToComPayRecord(comPayRecordDto, company);
+        return comPayRecordMapper.updateByPrimaryKeySelective(comPayRecord);
+    }
 }

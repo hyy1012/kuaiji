@@ -17,9 +17,11 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface ComPayRecordMapperDto {
 
+    @Mapping(source = "comPayRecord.id", target = "id")
     ComPayRecordDto comPayRecordAndCompanyToComPayRecordDto(ComPayRecord comPayRecord, Company company);
 
     @Mapping(source = "company.id", target = "CId")
-    @Mapping(target = "id", ignore = true)
-    ComPayRecord comPayRecordDtoAndCompanyToComPayRecord(ComPayRecordDto comPayRecordDto,Company company);
+    @Mapping(source = "comPayRecordDto.id", target = "id")
+//    @Mapping(target = "id", ignore = true)
+    ComPayRecord comPayRecordDtoAndCompanyToComPayRecord(ComPayRecordDto comPayRecordDto, Company company);
 }

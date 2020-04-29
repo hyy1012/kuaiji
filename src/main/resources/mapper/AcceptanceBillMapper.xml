@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huaxing.account.pay.mapper.AcceptanceBillMapper">
+  <resultMap id="BaseResultMap" type="com.huaxing.account.pay.entity.AcceptanceBill">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="no" jdbcType="INTEGER" property="no" />
+    <result column="rz_time" jdbcType="DATE" property="rzTime" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="tiexi" jdbcType="INTEGER" property="tiexi" />
+    <result column="in_name" jdbcType="VARCHAR" property="inName" />
+    <result column="dq_time" jdbcType="DATE" property="dqTime" />
+    <result column="out_name" jdbcType="VARCHAR" property="outName" />
+    <result column="fc_time" jdbcType="DATE" property="fcTime" />
+    <result column="cd_type" jdbcType="INTEGER" property="cdType" />
+    <result column="cd_bank" jdbcType="VARCHAR" property="cdBank" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="sz_bank" jdbcType="VARCHAR" property="szBank" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+</mapper>

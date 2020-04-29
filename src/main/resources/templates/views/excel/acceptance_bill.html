@@ -1,0 +1,368 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>合同登记及付款表</title>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="layuiadmin/layui/css/jquery-editable-select.css"/>
+    <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="css/soulTable.css" media="all">
+    <link rel="stylesheet" href="css/sousuo.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item line-height">
+                <div class="layui-inline" style="width: 400px">
+                    <label class="layui-form-label l-small" style="">公司名称</label>
+                    <div class="layui-input-block b-small">
+                        <select name="name" id="editable-select" class="layui-input" style="background-color: white"></select>
+                    </div>
+                </div>
+                <div class="layui-inline" style="width: 200px">
+                    <label class="layui-form-label l-small" style="">年份</label>
+                    <div class="layui-input-block b-small">
+                        <select name="year" id="year" class="layui-input">
+                            <option th:each="year:${years}" th:value="${year}" th:text="${year}">2020</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layui-btn-primary layuiadmin-btn-useradmin" id="search" lay-filter="LAY-user-front-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                    <button class="layui-btn" id="cd_input_btn">承兑汇票录入</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <table id="bill" lay-filter="bill"></table>
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+            </script>
+        </div>
+    </div>
+</div>
+
+<!-- 承兑汇票录入 -->
+<script type="text/html" id="cd_input">
+    <form class="layui-form layui-form-pane layui-container" id="f_bill" lay-filter="test1" style="margin: 10px auto; width: 1000px;">
+        <div class="layui-form-item layui-row">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <label class="layui-form-label">入账日期</label>
+                <div class="layui-input-block">
+                    <input name="id" id="id" hidden>
+                    <input name="no" id="no" hidden>
+                    <input name="rzTime" class="layui-input date" id="rzTime" type="text" autocomplete="off" lay-verify="date">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                <label class="layui-form-label">号码</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" name="number" id="number" type="text" autocomplete="off">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <label class="layui-form-label">金额</label>
+                <div class="layui-input-block">
+                    <input name="money" id="money" class="layui-input" type="text" placeholder="￥" lay-verify="validateMoney">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-row">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <label class="layui-form-label">到期日期</label>
+                <div class="layui-input-block">
+                    <input name="dqTime" class="layui-input date" id="dqTime" type="text" autocomplete="off" lay-verify="date">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                <label class="layui-form-label">付款单位</label>
+                <div class="layui-input-block">
+                    <input name="inName" id="inName" class="layui-input" type="text">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <select name="tiexi" id="tiexi" class="layui-select">
+                        <option value="1">化纤已贴息</option>
+                        <option value="2">未贴息</option>
+                        <option value="3">自开</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-row">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <label class="layui-form-label">付出日期</label>
+                <div class="layui-input-block">
+                    <input name="fcTime" class="layui-input date" id="fcTime" type="text" autocomplete="off" lay-verify="date">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                <label class="layui-form-label">付出单位</label>
+                <div class="layui-input-block">
+                    <input name="outName" id="outName" class="layui-input" type="text">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <label class="layui-form-label">承兑类型</label>
+                <div class="layui-input-block">
+                    <select name="cdType" id="cdType" class="layui-select">
+                        <option value="">请选择</option>
+                        <option value="1">电子承兑</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-row">
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <label class="layui-form-label">承兑银行</label>
+                <div class="layui-input-block">
+                    <input name="cdBank" id="cdBank" class="layui-input" type="text">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input name="note" id="note" class="layui-input" type="text">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <label class="layui-form-label">所在银行</label>
+                <div class="layui-input-block">
+                    <input name="szBank" id="szBank" class="layui-input" type="text">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button id="bill_btn" class="layui-btn layui-btn-normal" type="button" lay-filter="compay" lay-submit="">提交</button>
+            </div>
+        </div>
+    </form>
+</script>
+<script src="layuiadmin/layui/layui.js"></script>
+<script src="layuiadmin/lib/jquery-3.5.0.js"></script>
+<script src="layuiadmin/lib/jquery-editable-select.js"></script>
+<script>
+    layui.config({
+        base: 'layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'useradmin', 'table', 'element', 'laydate', 'soulTable'], function () {
+        var $ = layui.$, form = layui.form, table = layui.table, laydate = layui.laydate, soulTable = layui.soulTable;
+
+        $("#cd_input_btn").click(function () {
+            var data = {"test":"test"}
+            layer.open({
+                type: 1
+                , title: '承兑汇票录入'
+                , content: $("#cd_input").html()
+                , area: ['1000px', '320px']
+                , zIndex: 900
+                , offset: '10px'
+            });
+            form.render();$('.date').each(function () { laydate.render({elem: this}) })
+            $("#bill_btn").click(function () {
+                var fdata = $("#f_bill").serialize();
+                $.ajax({
+                    url: 'abill/save',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: fdata, //ajax方法发送formData对象
+                    success: function (data) {
+                        if (data.code == 200){
+                            layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                , btn: '关闭', btnAlign: 'c', yes: function(){
+                                    layer.closeAll();
+                                    $('#search').click()
+                                }
+                            });
+                        }else {
+                            layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                , btn: '关闭', btnAlign: 'c', yes: function(){
+                                    layer.closeAll();
+                                }
+                            });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            })
+        })
+
+        table.render({
+            id: 'bill'
+            ,elem: '#bill'
+            ,url: 'abill/list'
+            ,totalRow: true
+            ,cols: [
+                [{field:'no', title:'编号', rowspan: 2, width:60, unresize: true, fixed: 'left'}
+                ,{field:"id", hide: true}
+                ,{title:"收入汇票登记", colspan: 6, align: 'center'}
+                ,{title:"付出汇票登记", colspan: 2, align: 'center'}
+                ,{field:'cdType', title:'承兑类型', rowspan: 2, width:120, templet: function (d) {
+                        if (d.cdType == 1) {
+                            return "电子承兑"
+                        }else {
+                            return "";
+                        }
+                    }}
+                ,{field:'cdBank', title:'承兑银行', rowspan: 2, width:120, filter: true}
+                ,{field:'note', title:'备注', edit: 'text', rowspan: 2, width:175}
+                ,{field:'szBank', title:'所在银行', rowspan: 2, width:120}
+                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:85, rowspan: 2, fixed: 'right'}]
+                ,[{field:'rzTime', title:'入账日期', width:102}
+                    ,{field:'number', title:'号码', width:160}
+                    ,{field:'money', title:'金额', width:100}
+                    ,{field:'tiexi', title:'', width:100, templet: function (d) {
+                            if (d.tiexi == 1) {
+                                return "化纤已贴息"
+                            }else if (d.tiexi == 2) {
+                                return "未贴息"
+                            }else if (d.tiexi == 3) {
+                                return "自开"
+                            }else {
+                                return ""
+                            }
+                        }}
+                    ,{field:'inName', title:'付款单位', width:220}
+                    ,{field:'dqTime', title:'到期日期', width:102}
+                    ,{field:'outName', title:'付出单位', width:220, filter: true}
+                    ,{field:'fcTime', title:'付出日期', width:102}]
+            ]
+            ,where: {
+                year: $("#year").val()
+            }
+            ,filter: {
+                items:['data', 'condition', 'clearCache'] // 加入了清除缓存按钮
+                ,cache: true
+                ,bottom: false
+            }
+            ,done: function(){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、curr为当前页码、count为数据总长度
+                // console.log(soulTable)
+                soulTable.render(this)
+            }
+            ,page: false
+            ,parseData: function(res){
+            }
+
+        });
+
+        $('#search').click(function () {
+            var year = $("#year").val()
+            table.reload('bill', {
+                url: 'abill/list',
+                where: {year}
+            })
+        })
+
+        //监听行工具事件
+        table.on('tool(bill)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'edit'){
+                layer.open({
+                    type: 1
+                    , title: '承兑汇票录入'
+                    , content: $("#cd_input").html()
+                    , area: ['1000px', '320px']
+                    , zIndex: 900
+                    , offset: '10px'
+                });
+                $('#id').val(data.id);$("#no").val(data.no);$('#rzTime').val(data.rzTime);$('#number').val(data.number)
+                $('#money').val(data.money);$('#dqTime').val(data.dqTime);$('#inName').val(data.inName)
+                $('#tiexi').val(data.tiexi);$('#fcTime').val(data.fcTime);$('#outName').val(data.outName)
+                $('#cdType').val(data.cdType);$('#cdBank').val(data.cdBank);$('#note').val(data.note);$('#szBank').val(data.szBank)
+                form.render();$('.date').each(function () { laydate.render({elem: this}) }) // 渲染不放到最后select不生效
+                $("#bill_btn").click(function () {
+                    var fdata = $("#f_bill").serialize();
+                    $.ajax({
+                        url: 'abill/save',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: fdata, // ajax方法发送formData对象
+                        success: function (data) {
+                            if (data.code == 200){
+                                layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                    , btn: '关闭', btnAlign: 'c', yes: function(){
+                                        layer.closeAll();
+                                        $('#search').click()
+                                    }
+                                });
+                            }else {
+                                layer.open({type: 1, offset: 'auto', content: '<div style="padding: 20px 100px;">'+ data.msg +'</div>'
+                                    , btn: '关闭', btnAlign: 'c', yes: function(){
+                                        layer.closeAll();
+                                    }
+                                });
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                })
+            }
+        });
+
+        $("#editable-select").on('input', function () {
+            var name = $("#editable-select").val();
+            if(name.match(/^[\u4e00-\u9fa5]+$/)){
+                $.ajax({
+                    "url": "company/tensl",
+                    "data": "name="+name,
+                    "type": "GET",
+                    "dataType": "json",
+                    "success": function (name) {
+                        $(".es-list").children().remove();
+                        $(".es-list").css("display","block");
+                        var num = 1;
+                        for (var i in name) {
+                            if (num == 1){
+                                var option = $('<li class="es-visible selected">').html(name[i]);
+                                num = 2;
+                            }else {
+                                var option = $('<li class="es-visible">').html(name[i]);
+                            }
+                            $(".es-list").append(option);
+                        }
+                    },
+                    "error": function () { }
+                });
+            }
+        })
+
+        //自定义表单验证（金额）
+        form.verify({
+            validateMoney: [
+                /(^$)|(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/ //正则表达式
+                ,'请输入正确的金额' //提示信息
+            ]
+        });
+
+    });
+</script>
+<script>
+    $('#editable-select').editableSelect({
+        effects: 'slide',   //下拉列表出来的方式
+        effects: 200  //时间
+    });
+</script>
+</body>
+</html>

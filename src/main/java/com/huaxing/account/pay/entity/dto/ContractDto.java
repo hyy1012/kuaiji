@@ -18,6 +18,8 @@ import java.util.Date;
 @Data
 public class ContractDto {
 
+    private Integer id;
+
     /**
      * 合同号
      */

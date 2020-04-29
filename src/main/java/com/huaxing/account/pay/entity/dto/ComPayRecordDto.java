@@ -9,6 +9,9 @@ import java.util.Date;
 
 @Data
 public class ComPayRecordDto {
+
+    private Integer id;
+
     /**
      * 凭证号
      */

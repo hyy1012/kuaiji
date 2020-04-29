@@ -38,7 +38,7 @@ public class CompanyController {
         PageHelper.startPage(page, limit);
         companies = companyService.selAll();
         PageInfo info = new PageInfo(companies);
-        return JsonUtils.page(0, info.getTotal(), "", companies);
+        return JsonUtils.page(0, info.getTotal(), companies);
     }
 
     @GetMapping("/tensl")

@@ -6,10 +6,11 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.example.base.BaseEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
-public class Contract {
+public class Contract extends BaseEntity {
 
     /**
      * 合同号

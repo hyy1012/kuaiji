@@ -19,6 +19,13 @@ public interface ContractMapperDto {
 
     @Mapping(source = "contract.CName", target = "CName")
     @Mapping(source = "contract.note", target = "note")
+    @Mapping(source = "contract.id", target = "id")
     ContractDto contractAndCompanyToContractDto(Contract contract, Company company);
 
+    @Mapping(source = "company.id", target = "CId")
+    @Mapping(source = "contractDto.CName", target = "CName")
+    @Mapping(source = "contractDto.note", target = "note")
+    @Mapping(source = "contractDto.id", target = "id")
+//    @Mapping(target = "id", ignore = true)
+    Contract contractDtoAndCompanyToContract(ContractDto contractDto, Company company);
 }
